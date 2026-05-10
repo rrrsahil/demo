@@ -10,7 +10,7 @@ const budgetRoutes = require('./routes/budget.routes');
 const checklistRoutes = require('./routes/checklist.routes');
 const notesRoutes = require('./routes/notes.routes');
 const profileRoutes = require('./routes/profile.routes');
-const { errorHandler, notFound } = require('./middleware/error.middleware');
+const { globalErrorHandler } = require('./middleware/error.middleware');
 
 const app = express();
 
@@ -37,8 +37,6 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Traveloop API is running 🚀' });
 });
 
-// Error Handlers
-app.use(notFound);
-app.use(errorHandler);
+app.use(globalErrorHandler);
 
 module.exports = app;

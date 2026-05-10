@@ -1,53 +1,56 @@
-import { NavLink, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import '../css/sidebar.css'
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import "../css/sidebar.css";
 
 const NAV_ITEMS = [
-  { section: 'Main', links: [
-    { to: '/dashboard', icon: 'fas fa-gauge', label: 'Dashboard' },
-    { to: '/trips', icon: 'fas fa-suitcase-rolling', label: 'My Trips' },
-    { to: '/trips/create', icon: 'fas fa-plus-circle', label: 'Create Trip' },
-  ]},
-  { section: 'Explore', links: [
-    { to: '/activities', icon: 'fas fa-compass', label: 'Activities' },
-    { to: '/community', icon: 'fas fa-users', label: 'Community' },
-  ]},
-  { section: 'Account', links: [
-    { to: '/profile', icon: 'fas fa-user-circle', label: 'Profile' },
-  ]},
-]
+  {
+    section: "Main",
+    links: [
+      { to: "/dashboard", icon: "fas fa-gauge", label: "Dashboard" },
+      { to: "/trips", icon: "fas fa-suitcase-rolling", label: "My Trips" },
+      { to: "/trips/create", icon: "fas fa-plus-circle", label: "Create Trip" },
+    ],
+  },
+  {
+    section: "Explore",
+    links: [
+      { to: "/activities", icon: "fas fa-compass", label: "Activities" },
+      { to: "/community", icon: "fas fa-users", label: "Community" },
+    ],
+  },
+  {
+    section: "Account",
+    links: [{ to: "/profile", icon: "fas fa-user-circle", label: "Profile" }],
+  },
+];
 
 const Sidebar = ({ isOpen, onClose }) => {
-  const { logout } = useAuth()
-  const navigate = useNavigate()
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout()
-    navigate('/login')
-    onClose()
-  }
+    logout();
+    navigate("/login");
+    onClose();
+  };
 
   return (
     <>
       {/* Overlay for mobile */}
       <div
-        className={`sidebar-overlay ${isOpen ? 'active' : ''}`}
+        className={`sidebar-overlay ${isOpen ? "active" : ""}`}
         onClick={onClose}
       />
 
-      <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+      <aside className={`sidebar ${isOpen ? "open" : ""}`}>
         {/* Header */}
-        <div className="sidebar-header">
-          <div className="sidebar-logo">
-            <div className="sidebar-logo-icon">
-              <i className="fas fa-plane-departure" />
-            </div>
-            Traveloop
-          </div>
-          <button className="sidebar-close" onClick={onClose} aria-label="Close menu">
+          <button
+            className="sidebar-close"
+            onClick={onClose}
+            aria-label="Close menu"
+          >
             <i className="fas fa-xmark" />
           </button>
-        </div>
 
         {/* Nav */}
         <nav className="sidebar-nav">
@@ -58,7 +61,9 @@ const Sidebar = ({ isOpen, onClose }) => {
                 <NavLink
                   key={to}
                   to={to}
-                  className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}
+                  className={({ isActive }) =>
+                    `sidebar-link${isActive ? " active" : ""}`
+                  }
                   onClick={onClose}
                 >
                   <i className={icon} />
@@ -78,7 +83,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         </div>
       </aside>
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

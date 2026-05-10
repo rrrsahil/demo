@@ -61,7 +61,7 @@ const PackingChecklist = () => {
   if (loading) return <Loader />
 
   return (
-    <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+    <div style={{ margin: '0 auto' }}>
       <div className="flex-between" style={{ marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
           <h1 className="page-title"><i className="fas fa-list-check" style={{ color: 'var(--primary)', marginRight: '10px' }} />Packing Checklist</h1>

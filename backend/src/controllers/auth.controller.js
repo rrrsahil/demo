@@ -1,7 +1,7 @@
 const User = require('../models/user.model');
 const generateToken = require('../utils/generateToken');
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
+const transporter = require('../configs/mail');
 
 // @desc    Register user
 // @route   POST /api/auth/register
@@ -88,48 +88,97 @@ const getProfile = async (req, res, next) => {
 const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
+
     if (!email) {
-      return res.status(400).json({ success: false, message: 'Email is required' });
+      return res.status(400).json({
+        success: false,
+        message: 'Email is required',
+      });
     }
 
     const user = await User.findOne({ email });
+
     if (!user) {
-      return res.status(404).json({ success: false, message: 'No account found with that email' });
+      return res.status(404).json({
+        success: false,
+        message: 'No account found with that email',
+      });
     }
 
+    // Generate token
     const resetToken = crypto.randomBytes(32).toString('hex');
-    user.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-    user.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 mins
+
+    // Hash token
+    user.resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+
+    // Expiry
+    user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+
     await user.save({ validateBeforeSave: false });
 
-    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+    // Frontend reset URL
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
 
-    // Stub email — log to console in dev
-    if (process.env.NODE_ENV === 'development') {
-      console.log('🔑 Password Reset URL:', resetUrl);
-    } else {
-      try {
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-        });
-        await transporter.sendMail({
-          from: `Traveloop <${process.env.EMAIL_USER}>`,
-          to: user.email,
-          subject: 'Traveloop — Password Reset Request',
-          html: `<p>Click <a href="${resetUrl}">here</a> to reset your password. This link expires in 10 minutes.</p>`,
-        });
-      } catch (emailErr) {
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
-        await user.save({ validateBeforeSave: false });
-        return res.status(500).json({ success: false, message: 'Email could not be sent' });
-      }
-    }
+    // Email template
+    const message = `
+      <div style="font-family: Arial, sans-serif; padding: 20px;">
+        <h2>Traveloop Password Reset</h2>
 
-    res.json({ success: true, message: 'Password reset link sent. Check console in dev mode.', resetUrl: process.env.NODE_ENV === 'development' ? resetUrl : undefined });
+        <p>You requested a password reset.</p>
+
+        <p>
+          Click the button below to reset your password:
+        </p>
+
+        <a
+          href="${resetUrl}"
+          style="
+            display:inline-block;
+            padding:12px 20px;
+            background:#2563eb;
+            color:#fff;
+            text-decoration:none;
+            border-radius:6px;
+            margin-top:10px;
+          "
+        >
+          Reset Password
+        </a>
+
+        <p style="margin-top:20px;">
+          This link will expire in 10 minutes.
+        </p>
+
+        <p>
+          If you did not request this, please ignore this email.
+        </p>
+      </div>
+    `;
+
+    // Send mail
+    await transporter.sendMail({
+      from: `Traveloop <${process.env.EMAIL_USER}>`,
+      to: user.email,
+      subject: 'Traveloop Password Reset',
+      html: message,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset link sent to your email',
+    });
+
   } catch (error) {
-    next(error);
+
+    console.error('FORGOT PASSWORD ERROR:', error);
+
+    return res.status(500).json({
+      success: false,
+      message: 'Email could not be sent',
+    });
   }
 };
 

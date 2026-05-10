@@ -146,15 +146,30 @@
 .sidebar-logout:hover { background: var(--danger-light); }
 
 /* Desktop: always visible */
+/* Desktop Sidebar */
 @media (min-width: 768px) {
   .sidebar {
     transform: translateX(0);
-    position: sticky;
-    top: 0;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    width: var(--sidebar-width);
     height: calc(100vh - var(--header-height));
     box-shadow: none;
-    flex-shrink: 0;
+    z-index: 200;
   }
-  .sidebar-close { display: none; }
-  .sidebar-overlay { display: none; }
+
+  .sidebar-close {
+    display: none;
+  }
+
+  .sidebar-overlay {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  main {
+    margin-left: 0 !important;
+  }
 }

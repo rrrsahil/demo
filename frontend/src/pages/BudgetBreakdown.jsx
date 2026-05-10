@@ -31,8 +31,8 @@ const BudgetBreakdown = () => {
           api.get(`/trips/${tripId}`),
           api.get(`/budget/${tripId}`),
         ])
-        setTrip(tripRes.data.trip)
-        if (budgetRes.data.budget) setBudget(budgetRes.data.budget)
+        setTrip(tripRes.data.data.trip)
+        if (budgetRes.data.data.budget) setBudget(budgetRes.data.budget)
       } catch { setError('Failed to load budget') }
       finally { setLoading(false) }
     }

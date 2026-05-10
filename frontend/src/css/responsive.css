@@ -2,18 +2,6 @@
    TRAVELOOP — RESPONSIVE CSS
    ============================================= */
 
-/* ---- Sidebar desktop always visible ---- */
-@media (min-width: 768px) {
-  .sidebar {
-    transform: translateX(0) !important;
-    position: sticky;
-    top: 0;
-    height: calc(100vh - var(--header-height));
-    box-shadow: none;
-  }
-  .sidebar-overlay { display: none !important; }
-  .sidebar-close { display: none !important; }
-}
 
 /* ---- Main content padding on mobile ---- */
 @media (max-width: 767px) {
@@ -69,7 +57,7 @@
 /* ---- Large screens ---- */
 @media (min-width: 1280px) {
   .trips-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -77,4 +65,11 @@
 @media print {
   .sidebar, .header, .btn, button { display: none !important; }
   main { padding: 0 !important; }
+}
+
+@media (max-width: 767px) {
+  main {
+    margin-left: 0 !important;
+    padding: 20px 16px !important;
+  }
 }

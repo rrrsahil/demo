@@ -1,6 +1,7 @@
 {
   "name": "traveloop-backend",
   "version": "1.0.0",
+  "type" : "commonjs",
   "description": "Traveloop Travel Planning App - Backend API",
   "main": "src/server.js",
   "scripts": {

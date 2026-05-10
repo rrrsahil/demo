@@ -69,7 +69,7 @@ const Profile = () => {
   const getInitials = (n) => n?.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U'
 
   return (
-    <div style={{ maxWidth: '640px', margin: '0 auto' }}>
+    <div style={{ margin: '0 auto' }}>
       <div style={{ marginBottom: '28px' }}>
         <h1 className="page-title"><i className="fas fa-user-circle" style={{ color: 'var(--primary)', marginRight: '10px' }} />My Profile</h1>
         <p className="page-subtitle">Manage your account settings</p>

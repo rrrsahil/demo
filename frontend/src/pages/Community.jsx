@@ -35,7 +35,7 @@ const Community = () => {
       )}
 
       {!loading && trips.length > 0 && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
           {trips.map(trip => {
             const duration = getDuration(trip.startDate, trip.endDate)
             return (
@@ -88,4 +88,4 @@ const Community = () => {
   )
 }
 
-export default Community
+export default Community;

@@ -9,7 +9,15 @@ const Notes = require('../models/notes.model');
 // @access  Private
 const createTrip = async (req, res, next) => {
   try {
-    const { tripName, description, startDate, endDate, destinations, isPublic } = req.body;
+    const {
+  tripName,
+  description,
+  startDate,
+  endDate,
+  destinations,
+  isPublic,
+  estimatedBudget,
+} = req.body;
 
     if (!tripName || !startDate || !endDate) {
       return res.status(400).json({ success: false, message: 'Trip name, start date, and end date are required' });
@@ -29,6 +37,7 @@ const createTrip = async (req, res, next) => {
       endDate,
       coverImage,
       destinations: parsedDestinations,
+      estimatedBudget: estimatedBudget || 0,
       isPublic: isPublic === 'true' || isPublic === true,
     });
 

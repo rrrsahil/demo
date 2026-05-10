@@ -1,0 +1,88 @@
+.dashboard-welcome {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  color: #fff;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.dashboard-welcome::before {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+}
+.dashboard-welcome::after {
+  content: '✈️';
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 64px;
+  opacity: 0.15;
+}
+.welcome-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.welcome-subtitle {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+.welcome-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.welcome-btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+}
+.welcome-btn-primary {
+  background: #fff;
+  color: var(--primary);
+}
+.welcome-btn-primary:hover { background: rgba(255,255,255,0.9); transform: translateY(-1px); }
+.welcome-btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.4);
+}
+.welcome-btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.dashboard-section { margin-bottom: 32px; }
+
+.trips-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 600px) {
+  .trips-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 1100px) {
+  .trips-grid { grid-template-columns: repeat(3, 1fr); }
+}

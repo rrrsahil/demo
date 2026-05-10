@@ -1,0 +1,118 @@
+.create-trip-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.create-trip-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 32px;
+  overflow-x: auto;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  position: relative;
+}
+
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--border-color);
+  z-index: 0;
+}
+.step.done:not(:last-child)::after { background: var(--primary); }
+
+.step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  position: relative;
+  z-index: 1;
+  transition: var(--transition);
+}
+.step.active .step-num { border-color: var(--primary); color: var(--primary); }
+.step.done .step-num { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+.step-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.step.active .step-label { color: var(--primary); font-weight: 500; }
+
+.destination-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+
+.destination-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+.destination-item-content { flex: 1; }
+.destination-item-city { font-size: 14px; font-weight: 500; }
+.destination-item-nights { font-size: 12px; color: var(--text-secondary); }
+
+.destination-add-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.cover-preview {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--secondary-bg);
+  border: 2px dashed var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.cover-preview:hover { border-color: var(--primary); }
+.cover-preview img { width: 100%; height: 100%; object-fit: cover; }
+.cover-preview-placeholder { text-align: center; color: var(--text-muted); }
+.cover-preview-placeholder i { font-size: 32px; margin-bottom: 8px; display: block; }
+.cover-preview-placeholder p { font-size: 13px; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px; }
+
+@media (max-width: 600px) {
+  .form-row { grid-template-columns: 1fr; }
+  .destination-add-form { grid-template-columns: 1fr; }
+  .create-trip-card { padding: 20px; }
+}

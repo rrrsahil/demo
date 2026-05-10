@@ -103,8 +103,22 @@
 .trip-card-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 4px;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: auto;
   padding-top: 12px;
   border-top: 1px solid var(--border-color);
+}
+
+.trip-card-actions .btn-sm {
+  padding: 6px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  flex: 1;
+  justify-content: center;
+}
+
+.trip-card-actions .btn-ghost {
+  flex: 0 0 auto;
+  padding: 6px 8px;
 }

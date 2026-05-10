@@ -21,3 +21,15 @@ export const CATEGORY_ICONS = {
   Sports: '⚽',
   General: '📌',
 }
+
+export const ACTIVITY_DURATION_FILTERS = [
+  'all',
+  'short',
+  'long'
+]
+
+export const ACTIVITY_COST_FILTERS = [
+  'all',
+  'free',
+  'paid'
+]

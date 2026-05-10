@@ -1,53 +1,60 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/global.css";
 
-const NotFound = () => (
-  <div
-    style={{
-      minHeight: "100vh",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexDirection: "column",
-      gap: "16px",
-      fontFamily: "Poppins, sans-serif",
-      textAlign: "center",
-      padding: "20px",
-    }}
-  >
-    <div style={{ fontSize: "80px" }}>✈️</div>
-    <h1
+const NotFound = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div
       style={{
-        fontSize: "72px",
-        fontWeight: "700",
-        color: "#e2e8f0",
-        lineHeight: 1,
+        minHeight: "70vh", // Reduced to fit better in layouts
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        gap: "16px",
+        fontFamily: "Poppins, sans-serif",
+        textAlign: "center",
+        padding: "40px 20px",
       }}
     >
-      404
-    </h1>
-    <h2 style={{ fontSize: "22px", fontWeight: "600", color: "#0f172a" }}>
-      Page Not Found
-    </h2>
-    <p style={{ color: "#64748b", maxWidth: "360px" }}>
-      Looks like this destination doesn't exist on our map yet.
-    </p>
-    <Link
-      to="/dashboard"
-      style={{
-        marginTop: "8px",
-        padding: "11px 24px",
-        background: "#2563eb",
-        color: "#fff",
-        borderRadius: "8px",
-        fontWeight: "500",
-        fontSize: "14px",
-        textDecoration: "none",
-      }}
-    >
-      Back to Dashboard
-    </Link>
-  </div>
-);
+      <div style={{ fontSize: "80px", marginBottom: "10px" }}>✈️</div>
+      <h1
+        style={{
+          fontSize: "72px",
+          fontWeight: "700",
+          color: "var(--primary)",
+          lineHeight: 1,
+          opacity: 0.1,
+          position: "absolute",
+          zIndex: -1,
+        }}
+      >
+        404
+      </h1>
+      <h2 style={{ fontSize: "24px", fontWeight: "700", color: "var(--text-primary)" }}>
+        Destination Not Found
+      </h2>
+      <p style={{ color: "var(--text-secondary)", maxWidth: "400px", fontSize: "15px" }}>
+        Looks like this part of the world isn't on our map yet. Let's get you back on track!
+      </p>
+      
+      <div style={{ display: "flex", gap: "12px", marginTop: "12px" }}>
+        <button
+          onClick={() => navigate(-1)}
+          className="btn btn-secondary"
+        >
+          <i className="fas fa-arrow-left" /> Go Back
+        </button>
+        <Link
+          to="/dashboard"
+          className="btn btn-primary"
+        >
+          <i className="fas fa-house" /> Dashboard
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export default NotFound;

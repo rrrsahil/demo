@@ -14,12 +14,14 @@ import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import CreateTrip from "./pages/CreateTrip";
 import TripList from "./pages/TripList";
+import EditTrip from "./pages/EditTrip";
 import ItineraryBuilder from "./pages/ItineraryBuilder";
 import ItineraryView from "./pages/ItineraryView";
 import BudgetBreakdown from "./pages/BudgetBreakdown";
 import PackingChecklist from "./pages/PackingChecklist";
 import TripNotes from "./pages/TripNotes";
 import ActivitySearch from "./pages/ActivitySearch";
+import CitySearch from "./pages/CitySearch";
 import Profile from "./pages/Profile";
 import Community from "./pages/Community";
 
@@ -36,10 +38,12 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* Protected Routes inside MainLayout (Unauthenticated users won't see these) */}
+        <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/trips" element={<TripList />} />
             <Route path="/trips/create" element={<CreateTrip />} />
+            <Route path="/trips/:tripId/edit" element={<EditTrip />} />
             <Route
               path="/trips/:tripId/itinerary"
               element={<ItineraryBuilder />}
@@ -55,9 +59,13 @@ function App() {
             />
             <Route path="/trips/:tripId/notes" element={<TripNotes />} />
             <Route path="/activities" element={<ActivitySearch />} />
+            <Route path="/cities" element={<CitySearch />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/community" element={<Community />} />
+            {/* Catch-all for authenticated users inside the layout */}
+            <Route path="*" element={<NotFound />} />
           </Route>
+        </Route>
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />

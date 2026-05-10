@@ -17,6 +17,11 @@ const notesSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    dayLabel: {
+  type: String,
+  trim: true,
+  default: '',
+},
   },
   { timestamps: true }
 );

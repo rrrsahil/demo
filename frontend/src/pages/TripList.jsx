@@ -77,7 +77,7 @@ const TripList = () => {
       )}
 
       {!loading && filtered.length > 0 && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))', gap: '20px' }}>
           {filtered.map(trip => (
             <TripCard key={trip._id} trip={trip} onDelete={handleDelete} />
           ))}

@@ -138,7 +138,7 @@ const Dashboard = () => {
       </div>
 
       {/* Upcoming Trip */}
-      {upcomingTrip && (
+      {/* {upcomingTrip && (
         <div
           style={{
             background: "var(--card-bg)",
@@ -175,7 +175,7 @@ const Dashboard = () => {
             </Link>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Budget Overview */}
       <div

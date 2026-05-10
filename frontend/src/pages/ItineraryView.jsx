@@ -10,6 +10,7 @@ const ItineraryView = () => {
   const [trip, setTrip] = useState(null)
   const [itinerary, setItinerary] = useState([])
   const [loading, setLoading] = useState(true)
+  const [viewMode, setViewMode] = useState('list') // 'list' or 'calendar'
 
   useEffect(() => {
     const load = async () => {
@@ -20,7 +21,7 @@ const ItineraryView = () => {
         ])
         setTrip(tripRes.data.trip)
         setItinerary(itinRes.data.itinerary)
-      } catch {} finally { setLoading(false) }
+      } catch(err) { console.log(err) } finally { setLoading(false) }
     }
     load()
   }, [tripId])
@@ -35,7 +36,23 @@ const ItineraryView = () => {
           <h1 className="page-title"><i className="fas fa-scroll" style={{ color: 'var(--primary)', marginRight: '10px' }} />Itinerary View</h1>
           <p className="page-subtitle">{trip?.tripName}</p>
         </div>
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', background: 'var(--secondary-bg)', borderRadius: 'var(--radius-sm)', padding: '4px' }}>
+            <button 
+              className={`btn btn-sm ${viewMode === 'list' ? 'btn-primary' : 'btn-ghost'}`} 
+              onClick={() => setViewMode('list')}
+              style={{ border: 'none', boxShadow: viewMode === 'list' ? 'var(--shadow-sm)' : 'none' }}
+            >
+              <i className="fas fa-list-ul" />
+            </button>
+            <button 
+              className={`btn btn-sm ${viewMode === 'calendar' ? 'btn-primary' : 'btn-ghost'}`} 
+              onClick={() => setViewMode('calendar')}
+              style={{ border: 'none', boxShadow: viewMode === 'calendar' ? 'var(--shadow-sm)' : 'none' }}
+            >
+              <i className="fas fa-calendar-day" />
+            </button>
+          </div>
           <Link to={`/trips/${tripId}/itinerary`} className="btn btn-secondary btn-sm">
             <i className="fas fa-edit" /> Edit
           </Link>
@@ -83,7 +100,7 @@ const ItineraryView = () => {
             <i className="fas fa-plus" /> Build Itinerary
           </Link>
         </div>
-      ) : (
+      ) : viewMode === 'list' ? (
         <div style={{ position: 'relative' }}>
           {/* Timeline line */}
           <div style={{
@@ -159,6 +176,47 @@ const ItineraryView = () => {
               )
             })}
           </div>
+        </div>
+      ) : (
+        /* Calendar Grid View */
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
+          {itinerary.map((day) => {
+            const totalCost = day.activities.reduce((sum, a) => sum + (a.cost || 0), 0)
+            return (
+              <div key={day._id} className="card" style={{ display: 'flex', flexDirection: 'column', height: '100%', marginBottom: 0 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px', marginBottom: '12px' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                      <span className="badge badge-primary">Day {day.day}</span>
+                      <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)' }}>{day.city}</span>
+                    </div>
+                    {day.date && <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{formatDate(day.date)}</p>}
+                  </div>
+                  {totalCost > 0 && <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--primary)' }}>{formatCurrency(totalCost)}</span>}
+                </div>
+                
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {day.activities.length > 0 ? (
+                    day.activities.map((act, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', padding: '6px 0' }}>
+                        <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary)', flexShrink: 0 }} />
+                        <span style={{ flex: 1, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{act.activityName}</span>
+                        <span style={{ color: 'var(--text-muted)' }}>{act.duration}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <p style={{ fontSize: '12px', color: 'var(--text-muted)', fontStyle: 'italic' }}>No activities planned.</p>
+                  )}
+                </div>
+
+                {day.notes && (
+                  <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px dashed var(--border-color)', fontSize: '11px', color: 'var(--text-secondary)' }}>
+                    <i className="fas fa-note-sticky" style={{ marginRight: '4px' }} /> {day.notes}
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
       )}
     </div>

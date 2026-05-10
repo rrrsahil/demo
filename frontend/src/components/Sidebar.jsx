@@ -7,8 +7,8 @@ const NAV_ITEMS = [
     section: "Main",
     links: [
       { to: "/dashboard", icon: "fas fa-gauge", label: "Dashboard" },
-      { to: "/trips", icon: "fas fa-suitcase-rolling", label: "My Trips" },
       { to: "/trips/create", icon: "fas fa-plus-circle", label: "Create Trip" },
+      { to: "/trips", icon: "fas fa-suitcase-rolling", label: "My Trips" },
     ],
   },
   {
@@ -61,6 +61,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 <NavLink
                   key={to}
                   to={to}
+                  end
                   className={({ isActive }) =>
                     `sidebar-link${isActive ? " active" : ""}`
                   }

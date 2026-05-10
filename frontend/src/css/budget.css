@@ -2,54 +2,143 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
+  align-items: start;
 }
 
-.budget-form-card {
+/* =========================
+   COMMON CARD STYLE
+========================= */
+
+.budget-form-card,
+.budget-chart-wrap,
+.budget-analytics-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 24px;
+  box-shadow: var(--shadow-sm);
 }
+
+/* =========================
+   TOTAL CARD
+========================= */
 
 .budget-total-card {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   border-radius: var(--radius-lg);
-  padding: 24px;
+  padding: 28px 24px;
   color: #fff;
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .budget-total-label {
   font-size: 14px;
   opacity: 0.85;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .budget-total-amount {
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 700;
-  margin-bottom: 4px;
+  line-height: 1.1;
+  margin-bottom: 8px;
 }
 
 .budget-total-currency {
   font-size: 13px;
   opacity: 0.75;
+  letter-spacing: 1px;
 }
+
+/* =========================
+   ANALYTICS
+========================= */
+
+.budget-analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.budget-analytics-card {
+  padding: 18px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.budget-analytics-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.budget-analytics-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+/* =========================
+   ALERT
+========================= */
+
+.budget-alert {
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.budget-alert.success {
+  background: #ecfdf5;
+  color: #10b981;
+  border: 1px solid #a7f3d0;
+}
+
+.budget-alert.warning {
+  background: #fffbeb;
+  color: #f59e0b;
+  border: 1px solid #fde68a;
+}
+
+.budget-alert.danger {
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+/* =========================
+   FORM CARD
+========================= */
+
+.budget-form-card {
+  padding: 24px;
+}
+
+/* =========================
+   INPUT ROWS
+========================= */
 
 .budget-input-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 0;
+  gap: 14px;
+  padding: 15px 0;
   border-bottom: 1px solid var(--border-color);
 }
 
-.budget-input-row:last-of-type { border-bottom: none; }
+.budget-input-row:last-of-type {
+  border-bottom: none;
+}
 
 .budget-input-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -66,41 +155,65 @@
 }
 
 .budget-input-field {
-  width: 140px;
+  width: 130px;
+  height: 44px;
   border: 1.5px solid var(--border-color);
   border-radius: var(--radius-sm);
-  padding: 9px 12px;
+  padding: 10px 12px;
   font-size: 14px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   text-align: right;
   transition: var(--transition);
+  background: var(--card-bg);
 }
+
 .budget-input-field:focus {
   border-color: var(--primary);
   outline: none;
 }
 
+/* =========================
+   CHARTS
+========================= */
+
 .budget-charts {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
 .budget-chart-wrap {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 20px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .chart-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
 
-.budget-breakdown-list { display: flex; flex-direction: column; gap: 10px; }
+.recharts-responsive-container {
+  min-height: 260px;
+}
+
+/* =========================
+   BREAKDOWN
+========================= */
+
+.budget-breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.category-share-card {
+  padding: 22px;
+}
 
 .breakdown-item {
   display: flex;
@@ -108,12 +221,96 @@
   gap: 12px;
 }
 
-.breakdown-bar-wrap { flex: 1; height: 6px; background: var(--border-color); border-radius: var(--radius-full); overflow: hidden; }
-.breakdown-bar { height: 100%; border-radius: var(--radius-full); transition: width 0.5s ease; }
-.breakdown-amount { font-size: 13px; font-weight: 600; color: var(--text-primary); min-width: 80px; text-align: right; }
-.breakdown-label { font-size: 12px; color: var(--text-secondary); min-width: 90px; }
+.breakdown-label {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.breakdown-bar-wrap {
+  flex: 1;
+  height: 8px;
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.breakdown-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+}
+
+.breakdown-amount {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 45px;
+  text-align: right;
+}
+
+/* =========================
+   DESKTOP LAYOUT
+========================= */
 
 @media (min-width: 900px) {
-  .budget-layout { grid-template-columns: 380px 1fr; }
-  .budget-charts { grid-template-columns: 1fr 1fr; }
+  .budget-layout {
+    grid-template-columns: 380px 1fr;
+  }
+
+  .budget-layout > div {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+.budget-charts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 899px) {
+  .budget-layout {
+    gap: 18px;
+  }
+
+  .budget-layout > div {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .budget-chart-wrap {
+    min-height: auto;
+  }
+
+  .budget-total-amount {
+    font-size: 34px;
+  }
+
+  .budget-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .budget-input-row {
+    flex-wrap: wrap;
+  }
+
+  .budget-input-field {
+    width: 100%;
+  }
+
+  .breakdown-item {
+    flex-wrap: wrap;
+  }
+
+  .breakdown-label {
+    min-width: 100%;
+  }
 }

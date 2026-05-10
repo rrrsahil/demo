@@ -10,6 +10,7 @@ const budgetRoutes = require('./routes/budget.routes');
 const checklistRoutes = require('./routes/checklist.routes');
 const notesRoutes = require('./routes/notes.routes');
 const profileRoutes = require('./routes/profile.routes');
+const cityRoutes = require('./routes/city.routes');
 const { globalErrorHandler } = require('./middleware/error.middleware');
 
 const app = express();
@@ -31,6 +32,7 @@ app.use('/api/budget', budgetRoutes);
 app.use('/api/checklist', checklistRoutes);
 app.use('/api/notes', notesRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/cities', cityRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

@@ -21,6 +21,7 @@ const ItineraryBuilder = () => {
   const [modalDayId, setModalDayId] = useState(null);
   const [actSearch, setActSearch] = useState("");
   const [actCategory, setActCategory] = useState("All");
+  const [draggedIdx, setDraggedIdx] = useState(null);
 
   const [dayForm, setDayForm] = useState({
     day: "",
@@ -145,6 +146,43 @@ const ItineraryBuilder = () => {
       );
     } catch {
       alert("Failed to remove activity");
+    }
+  };
+
+  const handleDragStart = (e, index) => {
+    setDraggedIdx(index);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault(); // Necessary to allow dropping
+  };
+
+  const handleDrop = async (e, targetIndex) => {
+    e.preventDefault();
+    if (draggedIdx === null || draggedIdx === targetIndex) return;
+
+    const newItin = [...itinerary];
+    const [draggedItem] = newItin.splice(draggedIdx, 1);
+    newItin.splice(targetIndex, 0, draggedItem);
+
+    // Recalculate day numbers
+    const updatedItin = newItin.map((item, idx) => ({
+      ...item,
+      day: idx + 1
+    }));
+
+    setItinerary(updatedItin);
+    setDraggedIdx(null);
+
+    // Call API
+    try {
+      await api.put(`/itinerary/reorder/${tripId}`, {
+        orderedDays: updatedItin.map(d => ({ id: d._id, day: d.day }))
+      });
+    } catch(err) {
+      console.log(err)
+      alert("Failed to save new order");
     }
   };
 
@@ -331,8 +369,21 @@ const ItineraryBuilder = () => {
             </div>
           ) : (
             <div className="days-list">
-              {itinerary.map((day) => (
-                <div className="day-card" key={day._id}>
+              {itinerary.map((day, index) => (
+                <div 
+                  className="day-card" 
+                  key={day._id}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, index)}
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, index)}
+                  onDragEnd={() => setDraggedIdx(null)}
+                  style={{ 
+                    opacity: draggedIdx === index ? 0.4 : 1,
+                    cursor: 'grab',
+                    transition: 'opacity 0.2s'
+                  }}
+                >
                   <div
                     className="day-card-header"
                     onClick={() =>
@@ -340,7 +391,10 @@ const ItineraryBuilder = () => {
                     }
                   >
                     <div className="day-card-title">
-                      <div className="day-badge">D{day.day}</div>
+                      <div className="day-badge" style={{ cursor: 'grab' }} title="Drag to reorder">
+                        <i className="fas fa-grip-vertical" style={{ fontSize: '10px', marginRight: '4px', opacity: 0.6 }} />
+                        D{day.day}
+                      </div>
                       <div>
                         <p className="day-city-name">{day.city}</p>
                         <p className="day-activity-count">

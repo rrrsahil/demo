@@ -78,6 +78,14 @@ const TripCard = ({ trip, onDelete }) => {
           >
             <i className="fas fa-wallet" /> Budget
           </Link>
+          <Link
+            to={`/trips/${trip._id}/edit`}
+            className="btn btn-ghost btn-sm"
+            title="Edit trip"
+            style={{ color: "var(--primary)" }}
+          >
+            <i className="fas fa-pen-to-square" />
+          </Link>
           {onDelete && (
             <button
               className="btn btn-ghost btn-sm"
